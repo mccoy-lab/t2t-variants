@@ -17,7 +17,8 @@ cd /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/
 # replace with GRCh38 if desired
 SAMPLE='CHM13'
 
-mkdir /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
+mkdir -p /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
+mkdir -p /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
 
