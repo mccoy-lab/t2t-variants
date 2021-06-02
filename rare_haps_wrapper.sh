@@ -17,14 +17,16 @@ SAMPLE=`sed "${SLURM_ARRAY_TASK_ID}q;d" 1KGP_samples.txt`
 mkdir /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
-echo -e "${SAMPLE}\t${SAMPLE}" > ${SAMPLE}.remove
+
+cat ../1KGP_samples.txt | grep -v -w ${SAMPLE} | awk '{print $1"\t"$1}' > ${SAMPLE}.keep
 
 for i in {1..22}
 do
 ~/scratch4-mschatz1/rmccoy22/code/plink \
---vcf ~/scratch4-mschatz1/rmccoy22/1kg-GRCh38-phase3/ALL.chr${i}.shapeit2_integrated_v1a.GRCh38.20181129.phased.vcf.gz \
+--vcf /scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr${i}.filtered.shapeit2-duohmm-phased.vcf.gz  \
 --make-bed \
---remove ${SAMPLE}.remove \
+--keep-allele-order \
+--keep ${SAMPLE}.keep \
 --out /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}/chr${i};
 ~/scratch4-mschatz1/rmccoy22/code/plink \
 --bfile /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}/chr${i} \
