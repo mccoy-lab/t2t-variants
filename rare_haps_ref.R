@@ -17,7 +17,7 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   vcf_dir <- "/scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/"
   
   # query SNP 1 in 1000 Genomes
-  v1 <- system(paste0(vcf_dir, "CCDG_14151_B01_GRM_WGS_2020-08-05_chr", chrom, 
+  v1 <- system(paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix ", vcf_dir, "CCDG_14151_B01_GRM_WGS_2020-08-05_chr", chrom, 
                       ".filtered.shapeit2-duohmm-phased.vcf.gz chr", chrom, ":", v1_pos, "-", v1_pos), intern = TRUE) %>%
     strsplit(., "\t", fixed = TRUE) %>%
     unlist()
@@ -26,7 +26,7 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   v1 <- v1[10:length(v1)]
   
   # query SNP 2 in 1000 Genomes
-  v2 <- system(paste0(vcf_dir, "CCDG_14151_B01_GRM_WGS_2020-08-05_chr", chrom, 
+  v2 <- system(paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix ", vcf_dir, "CCDG_14151_B01_GRM_WGS_2020-08-05_chr", chrom, 
                       ".filtered.shapeit2-duohmm-phased.vcf.gz chr", chrom, ":", v2_pos, "-", v2_pos), intern = TRUE) %>%
     strsplit(., "\t", fixed = TRUE) %>%
     unlist()
@@ -40,7 +40,7 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   dt[, c("v2_h1", "v2_h2") := tstrsplit(v2, "|", fixed = TRUE)]
   dt_hap <- data.table(v1 = c(dt$v1_h1, dt$v1_h2), v2 = c(dt$v2_h1, dt$v2_h2))
   
-  sample_id <- fread(cmd = paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix -H CCDG_14151_B01_GRM_WGS_2020-08-05_chr21.filtered.shapeit2-duohmm-phased.vcf.gz chr21 | tail -1 | tr '\t' '\n'")) %>%
+  sample_id <- fread(cmd = paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix -H /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr21.filtered.shapeit2-duohmm-phased.vcf.gz chr21 | tail -1 | tr '\t' '\n'")) %>%
     .[-(1:8),] %>%
     setnames(., "sample")
   
