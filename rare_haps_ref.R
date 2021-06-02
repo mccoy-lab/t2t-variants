@@ -115,4 +115,3 @@ hap_freq_h1 <- pbmcmapply(check_ld_inconsistency, ld$CHR_A, ld$BP_A, ld$BP_B, ge
 ld[, hap_freq := hap_freq_h1]
 fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_", chromosome, "_h1_rare_haps.txt"),
        quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
-
