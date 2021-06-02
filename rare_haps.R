@@ -15,7 +15,7 @@ unrelated_samples <- fread("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes
 # compute haplotype frequency for a pair of alleles observed in specified genome
 check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.character(NA)) {
   
-  vcf_dir <- "/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/"
+  vcf_dir <- "/scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/"
   
   # query SNP 1 in 1000 Genomes
   v1 <- system(paste0(vcf_dir, "CCDG_14151_B01_GRM_WGS_2020-08-05_chr", chrom, 
