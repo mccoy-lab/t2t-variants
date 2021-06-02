@@ -35,8 +35,8 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   v2 <- v2[10:length(v2)]
   
   if (length(v1) != length(v2)) return(NA)
-  if (sum(grepl("|", v1)) != length(v1)) return(NA)
-  if (sum(grepl("|", v2)) != length(v2)) return(NA)
+  if (sum(grepl("\\|", v1)) != length(v1)) return(NA)
+  if (sum(grepl("\\|", v2)) != length(v2)) return(NA)
 
   # split the haplotypes
   dt <- data.table(v1, v2)
