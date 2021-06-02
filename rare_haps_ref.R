@@ -7,8 +7,7 @@ sample_id <- args[1] # 1KGP sample ID or reference build (GRCh38 or CHM13)
 chromosome <- as.numeric(args[2])
 
 # load LD data from PLINK (generated using code snippet above)
-ld <- rbindlist(lapply(1:22, function(x) fread(paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/", sample_id, "/chr", x, ".ld"))))
-ld <- ld[CHR_A == chromosome]
+ld <- fread(paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/", sample_id, "/chr", x, ".ld"))
 
 unrelated_samples <- fread("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/1KGP_samples.txt", header = FALSE)$V1
 
