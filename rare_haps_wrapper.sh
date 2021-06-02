@@ -23,7 +23,7 @@ cat ../1KGP_samples.txt | grep -v -w ${SAMPLE} | awk '{print $1"\t"$1}' > ${SAMP
 for i in {1..22}
 do
 ~/scratch4-mschatz1/rmccoy22/code/plink \
---vcf /scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr${i}.filtered.shapeit2-duohmm-phased.vcf.gz  \
+--vcf /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr${i}.filtered.shapeit2-duohmm-phased.vcf.gz  \
 --make-bed \
 --keep-allele-order \
 --keep ${SAMPLE}.keep \
@@ -40,4 +40,4 @@ done
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/
 
-Rscript --verbose rare_haps.R ${SAMPLE} >& ${SAMPLE}.log
+Rscript --verbose rare_haps_1KGP.R ${SAMPLE} >& ${SAMPLE}.log
