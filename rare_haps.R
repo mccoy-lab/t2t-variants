@@ -9,6 +9,8 @@ chromosome <- as.numeric(args[2]) # as a number, no "chr" prefix
 # load LD data from PLINK (generated using code snippet above)
 ld <- rbindlist(lapply(1:22, function(x) fread(paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/", sample_id, "/chr", x, ".ld"))))
 ld <- ld[CHR_A == chromosome]
+                       
+unrelated_samples <- fread("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/1KGP_samples.txt", header = FALSE)$V1
 
 # compute haplotype frequency for a pair of alleles observed in specified genome
 check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.character(NA)) {
@@ -45,6 +47,8 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   
   dt_hap[, sample_id := rep(sample_id$sample, 2)]
   dt_hap$haplotype <- c(rep("h1", length(sample_id$sample)), rep("h2", length(sample_id$sample)))
+  
+  dt_hap <- dt_hap[sample_id %in% unrelated_samples]
   
   # query the test sample genome (GRCh38 is always 0 by definition)
   if (genome == "GRCh38") {
