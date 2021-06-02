@@ -33,13 +33,17 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
   alt_v2 <- v2[5]
   v2 <- v2[10:length(v2)]
   
+  if (length(v1) != length(v2)) return(NA)
+  if (sum(grepl("\\|", v1)) != length(v1)) return(NA)
+  if (sum(grepl("\\|", v2)) != length(v2)) return(NA)
+
   # split the haplotypes
   dt <- data.table(v1, v2)
   dt[, c("v1_h1", "v1_h2") := tstrsplit(v1, "|", fixed = TRUE)]
   dt[, c("v2_h1", "v2_h2") := tstrsplit(v2, "|", fixed = TRUE)]
   dt_hap <- data.table(v1 = c(dt$v1_h1, dt$v1_h2), v2 = c(dt$v2_h1, dt$v2_h2))
   
-  sample_id <- fread(cmd = paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix -H CCDG_14151_B01_GRM_WGS_2020-08-05_chr21.filtered.shapeit2-duohmm-phased.vcf.gz chr21 | tail -1 | tr '\t' '\n'")) %>%
+  sample_id <- fread(cmd = paste0("/scratch4/mschatz1/rmccoy22/code/htslib-1.11/tabix -H /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr21.filtered.shapeit2-duohmm-phased.vcf.gz chr21 | tail -1 | tr '\t' '\n'")) %>%
     .[-(1:8),] %>%
     setnames(., "sample")
   
@@ -111,10 +115,9 @@ ld[, hap_freq := hap_freq_h1]
 fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h1_rare_haps.txt"),
        quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
 
-if (!(sample_id %in% c("GRCh38", "CHM13")) {
-  hap_freq_h2 <- pbmcmapply(check_ld_inconsistency, ld$CHR_A, ld$BP_A, ld$BP_B, genome = sample_id, hap = "h2", mc.cores = 96L)
-  ld[, hap_freq := hap_freq_h2]
-  fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h2_rare_haps.txt"),
-         quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE) 
-}
+hap_freq_h2 <- pbmcmapply(check_ld_inconsistency, ld$CHR_A, ld$BP_A, ld$BP_B, genome = sample_id, hap = "h2", mc.cores = 96L)
+ld[, hap_freq := hap_freq_h2]
+fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h2_rare_haps.txt"),
+       quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE) 
+
                        
