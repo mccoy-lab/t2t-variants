@@ -29,6 +29,7 @@ cat ../1KGP_samples.txt | awk '{print $1"\t"$1}' > ${SAMPLE}.keep
 --make-bed \
 --keep-allele-order \
 --snps-only \
+--biallelic-only \
 --keep ${SAMPLE}.keep \
 --out /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}/chr${SLURM_ARRAY_TASK_ID};
 
