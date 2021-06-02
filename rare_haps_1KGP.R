@@ -4,11 +4,9 @@ library(pbmcapply)
 
 args <- commandArgs(trailingOnly = TRUE)
 sample_id <- args[1] # 1KGP sample ID or reference build (GRCh38 or CHM13)
-chromosome <- as.numeric(args[2]) # as a number, no "chr" prefix
 
 # load LD data from PLINK (generated using code snippet above)
 ld <- rbindlist(lapply(1:22, function(x) fread(paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/", sample_id, "/chr", x, ".ld"))))
-ld <- ld[CHR_A == chromosome]
                        
 unrelated_samples <- fread("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/1KGP_samples.txt", header = FALSE)$V1
 
@@ -110,13 +108,13 @@ check_ld_inconsistency <- function(chrom, v1_pos, v2_pos, genome, hap = as.chara
 
 hap_freq_h1 <- pbmcmapply(check_ld_inconsistency, ld$CHR_A, ld$BP_A, ld$BP_B, genome = sample_id, hap = "h1", mc.cores = 96L)
 ld[, hap_freq := hap_freq_h1]
-fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h1_", chromosome, "_rare_haps.txt"),
+fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h1_rare_haps.txt"),
        quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
 
 if (!(sample_id %in% c("GRCh38", "CHM13")) {
   hap_freq_h2 <- pbmcmapply(check_ld_inconsistency, ld$CHR_A, ld$BP_A, ld$BP_B, genome = sample_id, hap = "h2", mc.cores = 96L)
   ld[, hap_freq := hap_freq_h2]
-  fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h2_", chromosome, "_rare_haps.txt"),
+  fwrite(ld, file = paste0("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/", sample_id, "_h2_rare_haps.txt"),
          quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE) 
 }
                        
