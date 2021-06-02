@@ -24,8 +24,15 @@ cd /scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/${SAMPLE}
 
 cat ../1KGP_samples.txt | awk '{print $1"\t"$1}' > ${SAMPLE}.keep
 
+~/scratch4-mschatz1/rmccoy22/code/bcftools-1.11/bcftools norm \
+-o ${SAMPLE}_chr${SLURM_ARRAY_TASK_ID}.vcf.gz \
+-O z \
+--threads 48 \
+-m +snps \
+/scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr${SLURM_ARRAY_TASK_ID}.filtered.shapeit2-duohmm-phased.vcf.gz
+
 ~/scratch4-mschatz1/rmccoy22/code/plink \
---vcf /scratch4/mschatz1/rmccoy22/1kg-GRCh38-NYGC-highcoverage/CCDG_14151_B01_GRM_WGS_2020-08-05_chr${SLURM_ARRAY_TASK_ID}.filtered.shapeit2-duohmm-phased.vcf.gz \
+--vcf ${SAMPLE}_chr${SLURM_ARRAY_TASK_ID}.vcf.gz \
 --make-bed \
 --keep-allele-order \
 --snps-only \
