@@ -1,6 +1,7 @@
 library(data.table)
 library(tidyverse)
 library(bedr)
+library(pbmcapply)
 
 setwd("/scratch4/mschatz1/rmccoy22/rmccoy22/rare_haplotypes/output/")
 
@@ -57,6 +58,18 @@ count_rare_haps <- function(sample_id, haplotype) {
   )
 }
 
+sample_list_h1 <- c("CHM13", "GRCh38", "HG00128", "HG00339", "HG00379", "HG00542", "HG00623", "HG00851", 
+                    "HG00978", "HG01947", "HG02075", "HG02141", "HG03615", "HG03788", "HG04023", "NA19789")
 
-count_rare_haps("CHM13", "h1")
-count_rare_haps("GRCh38", "h1")
+h1_res <- rbindlist(pbmclapply(sample_list_h1, function(x) count_rare_haps(x, "h1"), mc.cores = getOption("mc.cores", 8L)))
+
+sample_list_h2 <- c("HG00128", "HG00379", "HG00542", "HG00978", "HG01947", "HG02075", "HG02141", "HG03615", 
+                    "HG03788", "HG04023")
+
+h2_res <- rbindlist(pbmclapply(sample_list_h2, function(x) count_rare_haps(x, "h2"), mc.cores = getOption("mc.cores", 8L)))
+
+results <- rbind(h1_res, h2_res) %>%
+  setorder(sample_id, haplotype)
+
+fwrite(results, file = "~/rh_summary.txt", quote = FALSE, sep = "\t", col.names = TRUE, row.names = FALSE)
+
