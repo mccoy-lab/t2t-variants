@@ -58,13 +58,11 @@ count_rare_haps <- function(sample_id, haplotype) {
   )
 }
 
-sample_list_h1 <- c("CHM13", "GRCh38", "HG00128", "HG00339", "HG00379", "HG00542", "HG00623", "HG00851", 
-                    "HG00978", "HG01947", "HG02075", "HG02141", "HG03615", "HG03788", "HG04023", "NA19789")
+sample_list_h1 <- c("CHM13", "GRCh38", "HG00128", "HG00339", "HG00379", "HG00542", "HG00623", "HG00851", "HG00978", "HG01947", "HG02075", "HG02141", "HG02657", "HG02675", "HG03615", "HG03788", "HG04023", "HG04158", "NA18954", "NA19789")
 
 h1_res <- rbindlist(pbmclapply(sample_list_h1, function(x) count_rare_haps(x, "h1"), mc.cores = getOption("mc.cores", 8L)))
 
-sample_list_h2 <- c("HG00128", "HG00379", "HG00542", "HG00978", "HG01947", "HG02075", "HG02141", "HG03615", 
-                    "HG03788", "HG04023")
+sample_list_h2 <- c("HG00128", "HG00379", "HG00542", "HG00978", "HG01947", "HG02075", "HG02141", "HG03615", "HG03788", "HG04023", "NA19789")
 
 h2_res <- rbindlist(pbmclapply(sample_list_h2, function(x) count_rare_haps(x, "h2"), mc.cores = getOption("mc.cores", 8L)))
 
