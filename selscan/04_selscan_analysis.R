@@ -231,3 +231,94 @@ fwrite(selscan_exons, "selscan_exons.tsv",
 
 # how many of the top hits overlap with exons?
 length(unique(selscan_exons[perc > 0.999 & !(is.na(exon_id))]$ID)) # 195
+
+
+############################################################################
+
+### plotting
+
+### locus-specific manhattan plots
+
+make_locusplot <- function(chrom, position, window, id) {
+  ident <- paste0(chrom, "_", position, "_", ident)
+  ident <- "chr16_37828623_A_T"
+  subset <- selscan_perc_filt[chr == chrom] %>%
+    .[pos > position - window & pos < position + window]
+  
+  # get order of ancestry components for this locus and correct plotting colors
+  color_assign <- c("#f8766d", "#cc9602", "#7cae01", "#00be67",
+                    "#01bfc4", "#00a9ff", "#c77cff", "#ff61cc")
+  order <- sort(unique(subset[perc >= 0.999]$ancestry_component))
+  color_vals <- sapply(order,
+                       function(x) color_assign[x])
+  
+  p <- ggplot() +
+    geom_point_rast(data = subset[perc < 0.999],
+                    aes(x = pos, y = lle_ratio),
+                    size = 0.5, color = "black") +
+    geom_point_rast(data = subset[perc >= 0.999],
+                    aes(x = pos, y = lle_ratio, color = as.factor(ancestry_component)),
+                    size = 0.5) +
+    scale_color_manual(values = color_vals) +
+    theme_bw() +
+    labs(title = ident,
+         x = "Position", y = "Log-likelihood ratio statistic (LRS)",
+         color = "Ancestry component") +
+    xlim(position - window, position + window) +
+    theme(plot.title = element_text(hjust = 0.5))
+  ggsave(paste0("locusplots/", ident, ".pdf"), p,
+         width = 9, height = 5)
+}
+make_locusplot("chrX", 36684515, 1e6, 7)
+make_locusplot("chr16", 37823759, 1e6, 5)
+
+
+### manhattan plot of all data, split by ancestry component
+
+# prep table of all snps for plotting
+all_plot <- selscan_perc_filt %>%
+  # use chromosome numbers for ordering
+  .[, chr_num := gsub("chr", "", chr)] %>%
+  .[chr == "chrX", chr_num := 23] %>%
+  .[, chr_num := as.numeric(chr_num)] %>%
+  # order SNPs along X axis for plotting
+  setorder(., chr_num, pos) %>%
+  .[, index := 1:.N, by = ancestry_component]
+
+# label snps in novel regions based on alternating chr number
+novel_ids <- unique(selscan_filt_novel$ID)
+all_plot %>%
+  .[, plot_id := paste0(chr_num %% 2, "_", "all")] %>%
+  .[ID %in% novel_ids, plot_id := paste0(chr_num %% 2, "_", "novel")] %>%
+  setorder(., -lle_ratio) %>%
+  .[, gene_anc := paste(gene_name, ancestry_component, sep = "_")] %>%
+  setorder(., gene_anc)
+# use ID to get rid of duplicate gene annotations for 
+selscan_plotting[duplicated(selscan_plotting$gene_anc), gene_name := ""]
+
+# make chromosome ticks on the bottom of the plot
+ticks <- group_by(all_plot[ancestry_component == 8], chr_num) %>%
+  summarize(., median_index = median(index))
+
+p <- ggplot() +
+  geom_point_rast(data = all_plot[plot_id == "0_all" | plot_id == "1_all"],
+                  aes(x = index, y = lle_ratio, color = plot_id),
+                  size = 0.3) +
+  geom_point_rast(data = all_plot[plot_id == "0_novel" | plot_id == "1_novel"],
+                  aes(x = index, y = lle_ratio, color = plot_id),
+                  size = 0.3) +
+  # geom_text_repel(data = all_plot[perc > 0.999 & (plot_id == "0_novel" | plot_id == "1_novel")],
+  #                 aes(x = index, y = lle_ratio, label = gene_name),
+  #                 fontface = "italic", color = "black", size = 3,
+  #                 force = 1.5, max.overlaps = 100000,
+  #                 min.segment.length = 0) +
+  theme_bw() +
+  theme(legend.position = "none", panel.spacing.x = unit(0, "lines"),
+        panel.border = element_blank(), panel.grid = element_blank(),
+        axis.title.x = element_blank()) +
+  scale_color_manual(values = c("#FCC5C0", "#fb8072", "#C6DBEF", "#6baed6")) +
+  facet_grid(ancestry_component ~ ., scales = "free") +
+  ylab("Likelihood ratio statistic (LRS)") +
+  scale_x_continuous(breaks = ticks$median_index, labels = c(1:22, "X"))
+ggsave("selscan_ancestry.pdf", p,
+       width = 8, height = 7)
