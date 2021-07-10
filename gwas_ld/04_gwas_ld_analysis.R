@@ -18,7 +18,6 @@ gwas_subset_path <- "gwas_subset.txt"
 gwas_path <- "gwas_all_associations_v1.0.2.tsv"
 
 # path to htslib install
-htslib_path <- "~/code/htslib-1.11/"
 htslib_path <- "/scratch4/mschatz1/rmccoy22/code/htslib-1.11/"
 
 ############################################################################
