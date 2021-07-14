@@ -1,4 +1,4 @@
-# Lifting over variants from GRCh38 to CHM13
+# Lifting over variants from GRCh38 to T2T-CHM13
 
 Liftover is performed with [GATK LiftoverVCF](https://gatk.broadinstitute.org/hc/en-us/articles/360037060932-LiftoverVcf-Picard-) tool
 
