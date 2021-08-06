@@ -4,11 +4,13 @@ Liftover is performed with [GATK LiftoverVCF](https://gatk.broadinstitute.org/hc
 
 1. Perform initial liftover
 	- `liftover_vcf.sh <in_vcf> <out_lifted> <out_rejected>`
+	- You will have to change the file locations of `GATK`, `CHAIN`, and `REF_FASTA` in the script to the locations of your GATK folder, the liftover chain file, and the fasta for the reference you are lifting over to.
 
 2. Recover ref/alt switches that failed initial liftover
 	- GATK Liftover does not natively support recovering multiallelic alleles, so multiallelic alleles are separated into biallelic variants, lifted over, and compressed
 	- `resolve_refalt_switches_in_multialt.sh <initial_rejected_vcf> <out_recovered>`
 	- This script uses the `mult_alt_resolver.py` and `parse_mult_alt_alleles.py` scripts
+	- You will have to change the file locations of `GATK`, `CHAIN`, and `REF_FASTA` in the script to the locations of your GATK folder, the liftover chain file, and the fasta for the reference you are lifting over to.
 
 3. Subset reference mismatch variants whose position lifts over, but are not recoverable with GATK Liftover
 	- `subset_failures_to_non-recovered.sh <recovered_vcf> <initial_rejected_vcf> <out_refmismatch>`

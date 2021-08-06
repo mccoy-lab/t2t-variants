@@ -8,4 +8,4 @@ in_path=$1
 lifted_out_path=$2
 rejected_out_path=$3
 
-$GATK LiftoverVcf -I ${in_path} -O ${out_lifted} --CHAIN ${CHAIN} -R ${REF_FASTA} --REJECT ${rejected_out_path}
+$GATK LiftoverVcf -I ${in_path} -O ${lifted_out_path} --CHAIN ${CHAIN} -R ${REF_FASTA} --REJECT ${rejected_out_path}
