@@ -35,10 +35,26 @@ samtools merge \
 
 ## 2. Mapping quality mask
 
+```
+sbatch mapq_mask_wrapper.sh
+```
+When complete:
+```
+# concatenate and bedtools merge individual chromosome masks
+```
+
 
 ## 3. Base quality mask
 
+```
+sbatch baseq_mask_wrapper.sh
+```
+When complete:
+```
+# concatenate and bedtools merge individual chromosome masks
+```
+
 ## 4. Combined mask
 ```
-# bedtools intersect
+bedtools intersect -a coverage_mask.bed -b mapq_mask.bed baseq_mask.bed 
 ```
