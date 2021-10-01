@@ -2,7 +2,6 @@
 module load samtools
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/mask
-
 ```
 
 ## 1. Normalized depth mask
@@ -56,5 +55,5 @@ When complete:
 
 ## 4. Combined mask
 ```
-bedtools intersect -a coverage_mask.bed -b mapq_mask.bed baseq_mask.bed 
+bedtools intersect -a coverage_mask.bed -b mapq_mask.bed baseq_mask.bed > combined_mask.bed
 ```
