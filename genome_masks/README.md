@@ -28,15 +28,24 @@ When complete:
 # concatenate and bedtools merge individual chromosome masks
 
 # merge the CRAM files in preparation for steps 2 and 3
+for i in {1..22}
+do
 samtools merge \
+  -R chr${i} \
   -h HG00448.cram \
   -O CRAM \
   --reference /scratch4/mschatz1/CHM13/drafts/t2t-chm13.20200921.withGRCh38chrY.chrEBV.chrYKI270740v1r.fasta \
-  -@ 48 \
-  merged.cram \
-  *.cram
+  -@ 4 \
+  chr${i}_merged.cram \
+  HG*.cram &
+done
 
-samtools index -@ 48 merged.cram
+wait
+
+for i in {1..22}
+do
+  samtools index -@ 4 chr${i}_merged.cram &
+done
 ```
 
 ## 2. Mapping quality mask
