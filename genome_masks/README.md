@@ -1,3 +1,7 @@
+The approach below generates three genome masks, according to the three criteria described in the following article: https://www.illumina.com/science/genomics-research/articles/identifying-genomic-regions-with-high-quality-single-nucleotide-.html
+
+These masks define regions of the genome where SNV discovery and genotyping is relatively reliable. The three masks are then intersected to create one combined mask. Note that step 1 must be run separately for the autosomes and sex chromosomes.
+
 ```
 module load samtools
 
