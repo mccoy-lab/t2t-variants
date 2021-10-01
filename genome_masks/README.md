@@ -30,6 +30,8 @@ samtools merge \
   -@ 48 \
   merged.cram \
   *.cram
+
+samtools index -@ 48 merged.cram
 ```
 
 ## 2. Mapping quality mask
