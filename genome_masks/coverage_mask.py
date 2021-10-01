@@ -33,4 +33,4 @@ for rec in zip(*pys_list):
     norm_cov.append(norm_cov_sample)
   mean_norm_cov = statistics.mean(norm_cov)
   if (mean_norm_cov > 0.75 and mean_norm_cov < 1.25):
-    print(pys['chrom'], pys['pos'], mean_norm_cov, sep = "\t")
+    print(pys['chrom'], pys['pos'], pys['pos'] + 1, mean_norm_cov, sep = "\t")
