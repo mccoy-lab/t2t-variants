@@ -14,6 +14,7 @@ cd /scratch4/mschatz1/rmccoy22/rmccoy22/mask
 ```
 sbatch get_median_coverage.sh
 ```
+Technically, the above value may differ slightly from the median, as `mosdepth` does not report the median itself, but the cumulative distribution of coverages. We extract the first reported coverage for which the reported cumulative proportion of total bases exceeds 0.5. 
 
 When complete:
 ```
