@@ -10,6 +10,14 @@
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/mask
 
-chrom="chr${SLURM_ARRAY_TASK_ID}"
+if [[ ${chrom} -eq 23 ]]
+then
+  chrom="chrX"
+elif [[ ${chrom} -eq 24 ]]
+then
+  chrom="chrY"
+else
+  chrom="chr${SLURM_ARRAY_TASK_ID}"
+fi
 
 python mapq_mask.py ${chrom} > mapq_mask_${chrom}.txt
