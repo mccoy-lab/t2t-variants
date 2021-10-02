@@ -26,6 +26,10 @@ sbatch coverage_mask_wrapper.sh
 When complete:
 ```
 # concatenate and bedtools merge individual chromosome masks
+for i in {1..22}
+do
+    cat coverage_mask_chr${i}.txt | bedtools merge;
+done > coverage_mask.bed
 
 # merge the CRAM files in preparation for steps 2 and 3
 for i in {1..22}
