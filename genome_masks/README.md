@@ -18,7 +18,7 @@ Technically, the above value may differ slightly from the median, as `mosdepth` 
 
 ### Compare observed coverage to median autosomal coverage
 
-For sex chromosomes, adjust the median expectation based on the expected dosage of the chromosome for that sample. For example, for females (XX), the median autosomal coverage is used for the X, while for males (XY), the median is divided by 2 for both the X and the Y. Coverage for female samples is not considered when producing the coverage mask for the Y chromosome.
+For sex chromosomes, adjust the median expectation based on the dosage of the chromosome for that sample. For example, for females (XX), the median autosomal coverage is used for the X, while for males (XY), the median is divided by 2 for both the X and the Y. Coverage for female samples is not considered when producing the coverage mask for the Y chromosome.
 
 When complete:
 ```
