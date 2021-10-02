@@ -16,6 +16,10 @@ sbatch get_median_coverage.sh
 ```
 Technically, the above value may differ slightly from the median, as `mosdepth` does not report the median itself, but the cumulative distribution of coverages. We extract the first reported coverage for which the reported cumulative proportion of total bases exceeds 0.5. 
 
+### Compare observed coverage to median autosomal coverage
+
+For sex chromosomes, adjust the median expectation based on the expected dosage of the chromosome for that sample. For example, for females (XX), the median autosomal coverage is used for the X, while for males (XY), the median is divided by 2.
+
 When complete:
 ```
 cat *.median >  median_cov.txt
