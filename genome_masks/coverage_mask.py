@@ -19,6 +19,29 @@ for line in Lines:
 
 samples = list(med_cov.keys())
 
+# adjust expectations if sex chromosome
+sample_sex = {}
+sex_file = open('/scratch4/mschatz1/mschatz/T2T/2021.09.29.mask/samples.info', 'r')
+Lines = sex_file.readlines()[1:]
+for line in Lines:
+  line = line.strip().split()
+  sample_sex[line[0]] = line[2]
+
+if (chrom == "chrX"):
+  for sample in samples:
+    if (sample_sex[sample] == "F"):
+      continue;
+    elif (sample_sex[sample] == "M"):
+      med_cov[sample] = med_cov[sample] / 2;
+
+if (chrom == "chrY"):
+  for sample in list(sample_sex.keys()):
+    if (sample_sex[sample] == "F"):
+      print(sample, "is female");
+      samples.remove(sample);
+    elif (sample_sex[sample] == "M"):
+      med_cov[sample] = med_cov[sample] / 2;
+
 pys_list = []
 for idx, sample in enumerate(samples):
   globals()["f" + str(idx)] = pysam.AlignmentFile("/scratch4/mschatz1/mschatz/T2T/2021.09.29.mask/" + sample + ".cram", "rb", reference_filename = ref)
