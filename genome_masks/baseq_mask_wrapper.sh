@@ -6,7 +6,7 @@
 #SBATCH --time=12:00:00
 #SBATCH --mail-type=end
 #SBATCH --mail-user=rmccoy22@jhu.edu
-#SBATCH --array=1-22%22
+#SBATCH --array=1-24%24
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/mask
 
