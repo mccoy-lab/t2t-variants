@@ -20,6 +20,4 @@ else
   chrom="chr${SLURM_ARRAY_TASK_ID}"
 fi
 
-
-
 python coverage_mask.py ${chrom} > coverage_mask_${chrom}.txt
