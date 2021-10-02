@@ -31,6 +31,9 @@ do
     cat coverage_mask_chr${i}.txt | bedtools merge;
 done > coverage_mask.bed
 
+mkdir coverage_mask_per_chr
+mv coverage_mask_chr*.txt coverage_mask_per_chr
+
 # merge the CRAM files in preparation for steps 2 and 3
 for i in {1..22}
 do
