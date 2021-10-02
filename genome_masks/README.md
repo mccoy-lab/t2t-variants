@@ -39,7 +39,8 @@ mkdir coverage_mask_per_chr
 mv coverage_mask_chr*.txt coverage_mask_per_chr
 
 # merge the CRAM files in preparation for steps 2 and 3
-for i in {1..22}
+cd /scratch4/mschatz1/mschatz/T2T/2021.09.29.mask
+for i in {1..22} X Y
 do
 samtools merge \
   -R chr${i} \
@@ -53,7 +54,8 @@ done
 
 wait
 
-for i in {1..22}
+# index the CRAM files
+for i in {1..22} X Y
 do
   samtools index -@ 4 chr${i}_merged.cram &
 done
