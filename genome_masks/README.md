@@ -1,6 +1,6 @@
 The approach below generates three genome masks, according to the three criteria described in the following article: https://www.illumina.com/science/genomics-research/articles/identifying-genomic-regions-with-high-quality-single-nucleotide-.html
 
-These masks define regions of the genome where SNV discovery and genotyping is relatively reliable. The three masks are then intersected to create one combined mask. Note that step 1 must be run separately for the autosomes and sex chromosomes.
+These masks define regions of the genome where SNV discovery and genotyping is relatively reliable. The three masks are then intersected to create one combined mask.
 
 ```
 module load samtools
@@ -18,7 +18,7 @@ Technically, the above value may differ slightly from the median, as `mosdepth` 
 
 ### Compare observed coverage to median autosomal coverage
 
-For sex chromosomes, adjust the median expectation based on the expected dosage of the chromosome for that sample. For example, for females (XX), the median autosomal coverage is used for the X, while for males (XY), the median is divided by 2.
+For sex chromosomes, adjust the median expectation based on the expected dosage of the chromosome for that sample. For example, for females (XX), the median autosomal coverage is used for the X, while for males (XY), the median is divided by 2 for both the X and the Y. Coverage for female samples is not considered when producing the coverage mask for the Y chromosome.
 
 When complete:
 ```
