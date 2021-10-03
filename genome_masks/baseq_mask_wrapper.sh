@@ -10,10 +10,10 @@
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/mask
 
-if [[ ${chrom} -eq 23 ]]
+if [[ ${SLURM_ARRAY_TASK_ID} -eq 23 ]]
 then
   chrom="chrX"
-elif [[ ${chrom} -eq 24 ]]
+elif [[ ${SLURM_ARRAY_TASK_ID} -eq 24 ]]
 then
   chrom="chrY"
 else
