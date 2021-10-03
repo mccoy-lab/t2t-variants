@@ -3,7 +3,7 @@
 #SBATCH --job-name=mapq_mask
 #SBATCH -N 1
 #SBATCH --cpus-per-task 48
-#SBATCH --time=12:00:00
+#SBATCH --time=48:00:00
 #SBATCH --mail-type=end
 #SBATCH --mail-user=rmccoy22@jhu.edu
 #SBATCH --array=1-24%24
