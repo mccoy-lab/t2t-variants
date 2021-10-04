@@ -98,5 +98,5 @@ mv baseq_mask_chr*.txt baseq_mask_per_chr
 
 ## 4. Combined mask
 ```
-bedtools intersect -a coverage_mask.bed -b mapq_mask.bed baseq_mask.bed > combined_mask.bed
+bedtools intersect -a coverage_mask.bed -b mapq_mask.bed | bedtools intersect -a stdin -b baseq_mask.bed > combined_mask.bed
 ```
