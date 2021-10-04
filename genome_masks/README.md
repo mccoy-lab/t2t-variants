@@ -73,6 +73,9 @@ for i in {1..22} X Y;
 do
     cat mapq_mask_chr${i}.txt | bedtools merge >> mapq_mask.bed;
 done
+
+mkdir mapq_mask_per_chr
+mv mapq_mask_chr*.txt mapq_mask_per_chr
 ```
 
 
@@ -88,6 +91,9 @@ for i in {1..22} X Y;
 do
     cat baseq_mask_chr${i}.txt | bedtools merge >> baseq_mask.bed;
 done
+
+mkdir baseq_mask_per_chr
+mv baseq_mask_chr*.txt baseq_mask_per_chr
 ```
 
 ## 4. Combined mask
