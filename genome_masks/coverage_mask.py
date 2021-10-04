@@ -37,7 +37,7 @@ if (chrom == "chrX"):
 if (chrom == "chrY"):
   for sample in list(sample_sex.keys()):
     if (sample_sex[sample] == "F"):
-      print(sample, "is female");
+      # print(sample, "is female");
       samples.remove(sample);
     elif (sample_sex[sample] == "M"):
       med_cov[sample] = med_cov[sample] / 2;
