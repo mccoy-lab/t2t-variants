@@ -13,3 +13,5 @@ Code associated with the manuscript "A complete reference genome improves analys
 `liftover_vcfs` - liftover variants from GRCh38 to T2T-CHM13, recover biallelic and multiallelic ref/alt switches, and intersect variants that failed to lift over with T2T-CHM13 indels relative to GRCh38.
 
 `distance_to_novel-nonsyntenic` - determine the distance of T2T-CHM13 novel and non-syntenic regions to the closest GWAS Catalog or ClinVar variants, and investigate the distribution of the lengths of these regions
+
+`genome_masks` - identifying genomic intervals where variant calling is most reliable
