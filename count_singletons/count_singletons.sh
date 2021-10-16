@@ -24,10 +24,12 @@ vcftools \
 
 PATH=${PATH}:"~/scratch4-mschatz1/rmccoy22/code/bcftools-1.11/"
 
-bcftools query \
+bcftools view \
+  -Ou \
   --samples-file unrelated_samples.keep \
+  /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz |\
+bcftools query \
   -i'AC==AN' \
   -f'%CHROM %POS %AC %AN\n' \
-  /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz \
   > chr${SLURM_ARRAY_TASK_ID}_CHM13_singletons.txt 
   
