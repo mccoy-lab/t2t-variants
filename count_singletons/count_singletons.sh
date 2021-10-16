@@ -13,23 +13,24 @@
 #module load r
 
 module load vcftools
+PATH=${PATH}:"~/scratch4-mschatz1/rmccoy22/code/bcftools-1.11/"
 
 cd /scratch4/mschatz1/rmccoy22/rmccoy22/count_singletons/
 
+bcftools view \
+  --threads 48 \
+  -O z \
+  -o /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/unrelated/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz \
+  --samples-file  /scratch4/mschatz1/rmccoy22/rmccoy22/count_singletons/unrelated_samples.keep \
+  /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz 
+
 vcftools \
-  --keep unrelated_samples.keep \
   --singletons \
-  --gzvcf /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz \
+  --gzvcf /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/unrelated/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz \
   --out chr${SLURM_ARRAY_TASK_ID}
 
-PATH=${PATH}:"~/scratch4-mschatz1/rmccoy22/code/bcftools-1.11/"
-
-bcftools view \
-  -Ou \
-  --samples-file unrelated_samples.keep \
-  /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz |\
 bcftools query \
   -i'AC==AN' \
   -f'%CHROM %POS %AC %AN\n' \
+  /scratch4/mschatz1/rmccoy22/1kg-CHM13-recalibrated-PASS/unrelated/1kgp.chr${SLURM_ARRAY_TASK_ID}.recalibrated.snp_indel.pass.vcf.gz \
   > chr${SLURM_ARRAY_TASK_ID}_CHM13_singletons.txt 
-  
