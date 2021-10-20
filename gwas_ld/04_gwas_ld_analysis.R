@@ -77,6 +77,22 @@ fwrite(ld_merged, "ld_output.txt",
 system(command = paste0(htslib_path, "bgzip ",
                        "ld_output.txt"))
 
+# write supplementary table of unique gwas hits in LD
+ld_merged_supp <- ld_merged %>%
+  setorder(., ID, -R2) %>%
+  # remove rows with duplicate rsIDs, keeping only the first that appears
+  # (the highest r^2 value between the gwas snp and a nonsyntenic snp)
+  .[!duplicated(ID), ]
+setnames(ld_merged_supp,
+         c("ID", "SNP_A",  "SNP_B", "PUBMEDID",
+           "P-VALUE", "broad_ancestry", "DISEASE/TRAIT"),
+         c("snp_id", "chm13_id", "nonsyntenic_snp_in_strongest_ld", "pubmed_study_id",
+           "pvalue", "gwas_catalog_ancestry", "phenotype"))
+fwrite(ld_merged_supp[, c("snp_id", "chm13_id", "nonsyntenic_snp_in_strongest_ld",
+                          "R2", "pubmed_study_id", "gwas_pvalue",
+                          "gwas_catalog_ancestry", "kgp_ancestry", "phenotype")],
+       "gwas_ld_results.csv")
+
 
 ### stats
 
