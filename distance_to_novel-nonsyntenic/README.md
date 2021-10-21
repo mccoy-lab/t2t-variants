@@ -1,4 +1,6 @@
-# Find closest GWAS Catalog and ClinVar variants to T2T-CHM13 Novel and Non-syntenic Regions
+# Find closest GWAS Catalog and ClinVar variants to T2T-CHM13 Previously Unresolved and Non-syntenic Regions
+
+**NOTE**: Any references to "novel" regions in this README file and any scripts are referring to regions that were previously unresolved in the GRCh38 assembly.
 
 1. Generate non-overlapping regions from novel regions and non-syntenic regions in the T2T-CHM13 assembly
 	- `intersect_novel_and_nonsyntenic.sh`
