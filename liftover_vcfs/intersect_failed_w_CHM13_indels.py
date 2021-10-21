@@ -1,7 +1,7 @@
 import gzip
 import sys
 
-failed_positions_file = sys.argv[1] # This should be a vcf file
+failed_positions_file = sys.argv[1] # This should be a vcf.gz file
 chm13_on_grch38_file = '/scratch4/mschatz1/rmccoy22/CHM13/chm13.202000921_with38Y-align2-GRCh38.dip.vcf.gz' # Change to sys.argv[2]?
 
 
@@ -29,7 +29,8 @@ indel_overlap_count = 0
 total_count = 0
 chm13_alt_count = 0
 
-for line in open(failed_positions_file):
+for line in gzip.open(failed_positions_file):
+	line = line.decode()
 	if line.startswith('#'):
 		continue
 	fields = line.strip().split('\t')
