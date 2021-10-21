@@ -23,4 +23,5 @@ Liftover is performed with [GATK LiftoverVCF](https://gatk.broadinstitute.org/hc
 5. Count intersections with CHM13 indels, relative to GRCh38, from variants whose position failed to lift over
 	- `python intersect_failed_w_CHM13_indels.py <position_failed_vcf>`
 	- This script will output the number of input variants that intersected an indel on CHM13 relative to GRCh38. It will also count the number of these variants whose alternate allele (or one of the possible alternate alleles) *is* the CHM13 indel with which it intersected
+	- You will have to change the file location of `chm13_on_grch38_file` in the script to the location of the T2T-CHM13-on-GRCh38 alignment vcf generated using dipcall
 	
