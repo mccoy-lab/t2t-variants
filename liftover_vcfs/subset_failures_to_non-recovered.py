@@ -7,7 +7,8 @@ out_vcf = open(sys.argv[3], 'w')
 
 recovered_rsids = set()
 
-for line in open(recovered_vcf):
+for line in gzip.open(recovered_vcf):
+	line = line.decode()
 	if line.startswith('#'):
 		continue
 	fields = line.rstrip('\n').split('\t')
