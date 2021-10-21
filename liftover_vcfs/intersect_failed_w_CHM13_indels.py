@@ -1,7 +1,7 @@
 import gzip
 import sys
 
-failed_positions_file = sys.argv[1] # This should be a vcf.gz file
+failed_positions_file = sys.argv[1] # This should be a vcf file
 chm13_on_grch38_file = '/scratch4/mschatz1/rmccoy22/CHM13/chm13.202000921_with38Y-align2-GRCh38.dip.vcf.gz' # Change to sys.argv[2]?
 
 
@@ -25,7 +25,7 @@ for line in gzip.open(chm13_on_grch38_file):
 	if len(fields[3]) != len(fields[4]):
 		chm13_indels_by_chr[chrom][(start_pos, end_pos)] = (fields[3], fields[4])
 
-indel_count = 0
+indel_overlap_count = 0
 total_count = 0
 chm13_alt_count = 0
 
