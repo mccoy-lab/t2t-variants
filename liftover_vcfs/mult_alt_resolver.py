@@ -48,9 +48,8 @@ for line in gzip.open(recovered_lifted_vcf_file):
 	if line.startswith('#'):
 		output_file.write(line)
 
-
-for line in gzip.open(rejected_vcf_file):
-	line = line.decode()
+for line in gzip.open(rejected_vcf_file, mode='rt', compresslevel=5):
+	# line = line.decode()
 	if line.startswith('#'):
 		continue
 	fields = line.rstrip('\n').split('\t')
