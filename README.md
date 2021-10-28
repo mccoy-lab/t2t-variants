@@ -1,4 +1,5 @@
 # t2t-variants
+[![DOI](https://zenodo.org/badge/371794809.svg)](https://zenodo.org/badge/latestdoi/371794809)
 
 Code associated with the manuscript "A complete reference genome improves analysis of human genetic variation". This repository contains downstream analysis code used in various population genetic analyses, organized into directories described below:
 
