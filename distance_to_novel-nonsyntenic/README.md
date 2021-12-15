@@ -9,6 +9,8 @@ The regions of the T2T-CHM13 v1.0 assembly that were previously-unresolved (nove
 The 1Mbp regions of the T2T-CHM13 v1.0 assembly that are non-syntenic with the GRCh38 assembly are described in this file: `chm13.draft_v1.0_plus38Y.no_snyteny_1Mbp.bed`
 * This file is available in this repo, and is in the process of being added to the UCSC assembly hub browser.
 
+### Analysis Pipeline
+
 1. Generate non-overlapping regions from novel regions and non-syntenic regions in the T2T-CHM13 assembly
 	- `intersect_novel_and_nonsyntenic.sh`
 	- This script separates novel and non-syntenic regions into a set of regions that are *only* annotated as novel, regions that are *only* annoated as non-syntenic, and regions that are annotated as both novel and non-syntenic
